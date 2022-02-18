@@ -13,6 +13,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SafeArea } from "./src/components/utility/safe-area.component";
 import { Ionicons } from "@expo/vector-icons";
+import { restaurantsRequest } from "./src/services/restaurants/restaurants.service";
+import { RestaurantsContextProvider } from "./src/services/restaurants/restaurants.context";
 
 const MapScreen = () => {
   return (
@@ -64,6 +66,7 @@ const Tabs = () => {
 };
 
 export default function App() {
+  restaurantsRequest();
   const [oswaldLoaded] = useOswald({
     Oswald_400Regular,
   });
@@ -78,9 +81,11 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <Tabs />
-        </NavigationContainer>
+        <RestaurantsContextProvider>
+          <NavigationContainer>
+            <Tabs />
+          </NavigationContainer>
+        </RestaurantsContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
